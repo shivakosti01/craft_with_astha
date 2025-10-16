@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Products - Craft With Astha</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Caveat:wght@700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --gold: #d4af37; --dark: #0f0f0f; --light-bg: #1a1a1a;
+}
+body { background-color: var(--dark); color: #fff; font-family:'Poppins',sans-serif; }
+.navbar { background-color: rgba(0,0,0,0.9); border-bottom:1px solid rgba(255,215,0,0.3);}
+.navbar-brand { font-family:'Caveat',cursive; color: var(--gold) !important; font-size:2rem;}
+.nav-link { color:#fff !important; margin:0 10px; transition:0.3s;}
+.nav-link:hover { color: var(--gold) !important;}
+.section-title { font-family:'Caveat',cursive; color: var(--gold); font-size:2.5rem; text-align:center; margin-bottom:30px;}
+.filter-btn { background: var(--gold); color:#000; margin:2px; border:none; padding:8px 15px; border-radius:20px; cursor:pointer; font-weight:500;}
+.filter-btn:hover { background:#fff; transform:scale(1.05);}
+.product-card { background: var(--light-bg); border-radius:15px; padding:10px; margin:10px; transition:0.3s; }
+.product-card:hover { transform: translateY(-5px); box-shadow:0 0 20px var(--gold);}
+.product-card img { width:100%; border-radius:10px; transition:0.3s; }
+.product-name { font-weight:600; margin-top:10px; color: var(--gold); }
+.product-desc { font-size:0.9rem; color:#ccc; }
+.carousel-inner img { height:200px; object-fit:cover; border-radius:10px;}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">Craft With Astha</a>
+    <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+      <ul class="navbar-nav">
+        <li><a class="nav-link" href="/">Home</a></li>
+        <li><a class="nav-link" href="/about">About</a></li>
+        <li><a class="nav-link" href="/service">Services</a></li>
+        <li><a class="nav-link" href="/gallery">Gallery</a></li>
+        <li><a class="nav-link" href="/review">Reviews</a></li>
+        <li><a class="nav-link" href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="py-5" style="margin-top:80px;">
+  <div class="container">
+    <h2 class="section-title">All Products</h2>
+    <div class="text-center mb-4">
+      <button class="filter-btn" onclick="filterCategory('all')">All</button>
+      <button class="filter-btn" onclick="filterCategory('giftbox')">Gift Box</button>
+      <button class="filter-btn" onclick="filterCategory('decor')">Decor</button>
+      <button class="filter-btn" onclick="filterCategory('personalized')">Personalized</button>
+      <button class="filter-btn" onclick="filterCategory('accessory')">Accessory</button>
+      <button class="filter-btn" onclick="filterCategory('jewelry')">Jewelry</button>
+    </div>
+
+    <div class="row" id="productsGrid">
+      <% products.forEach((product, idx) => { %>
+        <div class="col-md-3 mb-4 product-item" data-category="<%= product.category %>">
+          <div class="product-card">
+            <div id="carousel<%= idx %>" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <% product.images.forEach((img, index) => { %>
+                  <div class="carousel-item <%= index===0 ? 'active' : '' %>">
+                    <img src="<%= img %>" class="d-block w-100" alt="<%= product.name %>">
+                  </div>
+                <% }) %>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carousel<%= idx %>" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carousel<%= idx %>" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              </button>
+            </div>
+            <h5 class="product-name"><%= product.name %></h5>
+            <p class="product-desc"><%= product.description %></p>
+            <a href="/order?product=<%= encodeURIComponent(product.name) %>" class="btn filter-btn w-100">Order Now</a>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function filterCategory(category){
+  const items = document.querySelectorAll('.product-item');
+  items.forEach(item => {
+    if(category === 'all' || item.dataset.category === category){
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+</script>
+
+</body>
+</html>
