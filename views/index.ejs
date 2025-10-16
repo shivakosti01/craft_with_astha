@@ -466,7 +466,106 @@ hr {
       background: #fff;
       transform: scale(1.05);
     }
-  </style>
+  
+
+
+<style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #fffaf4;
+      min-height: 100vh;
+    }
+
+    /* ======== FLASH POPUP ======== */
+    .flash-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background: transparent;
+      border-radius: 18px;
+      padding: 0;
+      width: 600px;
+      max-width: 90%;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      z-index: 9999;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .flash-popup.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* ======== BACKDROP ======== */
+    .flash-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 9998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .flash-overlay.show {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* ======== CLOSE BUTTON ======== */
+    .flash-close {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 20px;
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      color: #333;
+      cursor: pointer;
+      font-weight: bold;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+    }
+
+    /* ======== IMAGE ======== */
+    .flash-image {
+      width: 600px;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 3px solid #d4af37;
+      box-shadow: 0 3px 10px rgba(255, 215, 0, 0.3);
+    }
+
+    /* ======== RESPONSIVE ======== */
+    @media (max-width: 650px) {
+      .flash-popup {
+        width: 95%;
+      }
+      .flash-image {
+        width: 100%;
+        height: auto;
+      }
+    }
+  
+
+
+
+
+
+
+
 </head>
 <body>
 
@@ -484,6 +583,40 @@ hr {
   </div>
 </div>
 
+
+
+
+<!-- Flash Overlay -->
+  <div class="flash-overlay" id="flashOverlay"></div>
+
+  <!-- Flash Image Popup -->
+  <div class="flash-popup" id="flashPopup">
+    <button class="flash-close" id="flashClose">&times;</button>
+    <img class="flash-image" src="/images/Handmade Lamp1.png" alt="Special Offer">
+  </div>
+
+  <script>
+    const flashPopup = document.getElementById("flashPopup");
+    const flashOverlay = document.getElementById("flashOverlay");
+    const flashClose = document.getElementById("flashClose");
+
+    // Show popup on load
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        flashPopup.classList.add("show");
+        flashOverlay.classList.add("show");
+      }, 800);
+    });
+
+    // Close when clicking X or outside
+    flashClose.addEventListener("click", closePopup);
+    flashOverlay.addEventListener("click", closePopup);
+
+    function closePopup() {
+      flashPopup.classList.remove("show");
+      flashOverlay.classList.remove("show");
+    }
+  </script>
 
 
 
