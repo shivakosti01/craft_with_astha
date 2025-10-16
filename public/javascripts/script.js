@@ -36,3 +36,28 @@ document.addEventListener("DOMContentLoaded", () => {
       cpPopup.classList.remove("cp-show");
     });
   });
+
+
+
+
+
+    const flashPopup = document.getElementById("flashPopup");
+    const flashOverlay = document.getElementById("flashOverlay");
+    const flashClose = document.getElementById("flashClose");
+
+    // Show popup on load
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        flashPopup.classList.add("show");
+        flashOverlay.classList.add("show");
+      }, 800);
+    });
+
+    // Close when clicking X or outside
+    flashClose.addEventListener("click", closePopup);
+    flashOverlay.addEventListener("click", closePopup);
+
+    function closePopup() {
+      flashPopup.classList.remove("show");
+      flashOverlay.classList.remove("show");
+    }
